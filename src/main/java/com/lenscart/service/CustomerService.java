@@ -21,26 +21,28 @@ public class CustomerService implements ICustomerService{
 
 	@Override
 	public Customer getCustomerByName(String customerName) throws NoSuchProductFoundException{
-		try {
+	
 		     Customer customer= customerRepo.findByCustomerName(customerName);
+		     if(customer!=null) {
 		           return customer;
 		     }
-		 catch (Exception e){
-			throw new NoSuchProductFoundException("No Such Customer Exist");
-		}
+	         else {
+			       throw new NoSuchProductFoundException("No Such Customer Exist");
+		     }
 	}
 
     public Customer loginCustomer(Customer customer) throws NoSuchProductFoundException {
-    	try {
     	      Customer customer1 = customerRepo.findByCustomerName(customer.getCustomerName());
+    	      if(customer1!=null)
+    	      {
                        if (customer.getPassword().equals(customer1.getPassword())) {
                            return customer1;
                        }
                        else {
-                 	        throw new NoSuchProductFoundException("Wrong USername or Password");
+                 	        throw new NoSuchProductFoundException("Wrong Password");
                        }
     	     }
-        catch(Exception e) {
+             else{
         	  throw new NoSuchProductFoundException("Wrong USername or Password");
         }
     }
